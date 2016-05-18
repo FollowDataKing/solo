@@ -35,6 +35,13 @@ def load_ext_jars(path, classpath="SPARK_CLASSPATH"):
 class ETLWork(object):
     import os
     extlib = os.environ.get('EXT_LIB_DIR', None)
+    if extlib is None:
+        raise RuntimeError("Environment [EXT_LIB_DIR] not set!")
+
+    spark_home = os.environ.get('SPARK_HOME', None)
+    if spark_home is None:
+        raise RuntimeError("Environment [SPARK_HOME] not set!")
+
     load_ext_jars(extlib)
     supports = load_drivers()
 
@@ -43,12 +50,11 @@ class ETLWork(object):
         import sys
 
         # Add pyspark to sys.path
-        spark_home = os.environ.get('SPARK_HOME', None)
-        sys.path.insert(0, spark_home + "/python")
+        sys.path.insert(0, ETLWork.spark_home + "/python")
 
         # Add the py4j to the path.
         # You may need to change the version number to match your install
-        sys.path.insert(0, os.path.join(spark_home, 'python/lib/py4j-' + py4j_version + '-src.zip'))
+        sys.path.insert(0, os.path.join(ETLWork.spark_home, 'python/lib/py4j-' + py4j_version + '-src.zip'))
 
         from pyspark import SparkContext
         from pyspark import SparkConf
