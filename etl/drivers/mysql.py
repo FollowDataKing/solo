@@ -20,7 +20,8 @@ class MysqlConnection(Connection):
         properties = {
             "user": self.user,
             "password": self.password,
-            "characterEncoding": "utf8"
+            "characterEncoding": "utf8",
+            "sql_mode":"ALLOW_INVALID_DATES"
         }
         df.write.jdbc(url="jdbc:mysql://{host}:{port}/{db}".format(host=self.host, port=self.port, db=self.db),
             table=table,
