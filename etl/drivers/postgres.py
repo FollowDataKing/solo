@@ -17,4 +17,11 @@ class PostgresConnection(Connection):
         return df
 
     def write_data_frame(self, table):
-        pass
+        properties = {
+            "user": self.user,
+            "password": self.password
+        }
+        df.write.jdbc(url="jdbc:postgresql://{host}:{port}/{db}".format(host=self.host, port=self.port, db=self.db),
+            table=table,
+            mode=mode,
+            properties=properties)

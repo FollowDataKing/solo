@@ -16,5 +16,13 @@ class MysqlConnection(Connection):
 
         return df
 
-    def write_data_frame(self, table):
-        pass
+    def write_data_frame(self, df, table, mode="append"):
+        properties = {
+            "user": self.user,
+            "password": self.password,
+            "characterEncoding": "utf8"
+        }
+        df.write.jdbc(url="jdbc:mysql://{host}:{port}/{db}".format(host=self.host, port=self.port, db=self.db),
+            table=table,
+            mode=mode,
+            properties=properties)

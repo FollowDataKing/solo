@@ -15,7 +15,7 @@ class Connection(object):
         self.db = db
 
     def load_data_frame(self, table, alias=None):
-        raise NotImplementedError
+        raise NotImplementedError()
 
-    def write_data_frame(self, table):
-        raise NotImplementedError 
+    def write_data_frame(self, df, table, mode="append"):
+        raise NotImplementedError()

@@ -22,4 +22,4 @@ class MongoConnection(Connection):
         return self.context.sql("select * from " + true_alias)
 
     def write_data_frame(self, table):
-        pass
+        raise NotImplementedError()
